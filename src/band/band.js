@@ -14,6 +14,7 @@ class band extends Component {
       lodding: false,
       band_data: null,
       page: 1,
+      apiPage: null,
     };
 
     this.handleItemClick = this.handleItemClick.bind(this);
@@ -38,18 +39,38 @@ class band extends Component {
       this.setState({ lodding: true });
       //    네이버 밴드키 가져오기
       const access_token = process.env.REACT_APP_NAVER_BAND_KEY;
-      const url = `https://openapi.band.us/v2.1/bands?access_token=${access_token}`;
+      const url = `${process.env.REACT_APP_PROXY}/v2.1/bands?access_token=${access_token}`;
       const band_key = await axios.get(url).then((res) => {
         return res.data.result_data.bands[0].band_key;
       });
 
       //   네이버 밴드글 데이터 가져오기
-      const get_band_url = `https://openapi.band.us/v2/band/posts?access_token=${access_token}&band_key=${band_key}&locale=en_kr`;
-      axios.get(get_band_url).then((res) => {
-        const band_data = res.data.result_data.items;
-        this.setState({ band_data: band_data });
-        this.setState({ band_item: this.getBandData("식단표") });
-      });
+      const get_band_url = `${process.env.REACT_APP_PROXY}/v2/band/posts?access_token=${access_token}&band_key=${band_key}&locale=en_kr`;
+
+      let band_data = [];
+      let get_next_band_url = "";
+
+      for (var i = 0; i < 50; i++) {
+        //양이 많지않아 50페이지 까지만 탐색
+        get_next_band_url =
+          this.state.apiPage === null
+            ? get_band_url
+            : get_band_url + `&after=${this.state.apiPage}`;
+
+        const result_data = await axios.get(get_next_band_url).then((res) => {
+          return res.data.result_data;
+        });
+
+        band_data = band_data.concat(result_data.items);
+        // 다음페이지가 없을 경우 종료
+        if (result_data.paging.next_params === null) break;
+        // 다음페이지가 있다면
+        this.setState({ apiPage: result_data.paging.next_params.after });
+      }
+
+      this.setState({ band_data: band_data });
+      this.setState({ band_item: this.getBandData("식단표") });
+
       // 데이터 가져오기 종료
       this.setState({ lodding: false });
     };
@@ -104,12 +125,11 @@ class band extends Component {
           {band_item !== null ? (
             <Pagination
               boundaryRange={0}
-              defaultActivePage={1}
               activePage={this.state.page}
               ellipsisItem={null}
               firstItem={null}
               lastItem={null}
-              siblingRange={1}
+              siblingRange={2}
               totalPages={band_item.length}
               onClick={this.handlePagination}
             />

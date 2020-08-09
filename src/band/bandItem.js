@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Pagination, Image, Container } from "semantic-ui-react";
+import { Image } from "semantic-ui-react";
 
 class bandItem extends Component {
   constructor(props) {
@@ -10,7 +10,7 @@ class bandItem extends Component {
   }
   render() {
     const photo_url = this.props.item.photos[0].url;
-    return <Image className="imageBox" src={photo_url} alt="" height="600px" />;
+    return <Image className="imageBox" src={photo_url} alt="" />;
   }
 }
 
