@@ -37,13 +37,13 @@ class band extends Component {
       this.setState({ lodding: true });
       //    네이버 밴드키 가져오기
       const access_token = process.env.REACT_APP_NAVER_BAND_KEY;
-      const url = `/v2.1/bands?access_token=${access_token}`;
+      const url = `https://openapi.band.us/v2.1/bands?access_token=${access_token}`;
       const band_key = await axios.get(url).then((res) => {
         return res.data.result_data.bands[0].band_key;
       });
 
       //   네이버 밴드글 데이터 가져오기
-      const get_band_url = `/v2/band/posts?access_token=${access_token}&band_key=${band_key}&locale=en_kr`;
+      const get_band_url = `https://openapi.band.us/v2/band/posts?access_token=${access_token}&band_key=${band_key}&locale=en_kr`;
       axios.get(get_band_url).then((res) => {
         const band_data = res.data.result_data.items;
         this.setState({ band_data: band_data });
@@ -59,6 +59,7 @@ class band extends Component {
   handleItemClick(e) {
     const activeItem = e.target.textContent;
     this.setState({ activeItem: activeItem });
+    this.setState({ page: 1 });
     this.setState({ band_item: this.getBandData(activeItem) });
   }
 
@@ -105,6 +106,7 @@ class band extends Component {
             <Pagination
               boundaryRange={0}
               defaultActivePage={1}
+              activePage={this.state.page}
               ellipsisItem={null}
               firstItem={null}
               lastItem={null}
