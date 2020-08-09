@@ -1,17 +1,34 @@
 import React, { Component } from "react";
 import axios from "axios";
 import BandItem from "./bandItem";
+import { Container, Menu, Input, Pagination, Header } from "semantic-ui-react";
 
 class band extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      selectedCategory: 0,
-      selectedCategoryItem: null,
+      activeItem: "식단표",
+      band_item: null,
       lodding: false,
       band_data: null,
+      page: 1,
     };
+
+    this.handleItemClick = this.handleItemClick.bind(this);
+    this.handlePagination = this.handlePagination.bind(this);
+  }
+
+  getBandData(activeItem) {
+    let band_item = [];
+
+    this.state.band_data.map((item) => {
+      const content = item.content.replace(/(?:\r\n|\r|\n)/g, "<br/>");
+      if (content.lastIndexOf(activeItem) > 0) {
+        band_item.push(item);
+      }
+    });
+    return band_item;
   }
 
   componentDidMount() {
@@ -30,28 +47,75 @@ class band extends Component {
       axios.get(get_band_url).then((res) => {
         const band_data = res.data.result_data.items;
         this.setState({ band_data: band_data });
-
-        // some은 순회하는도중 true일경우 종료
-        band_data.some((item) => {
-          const content = item.content.replace(/(?:\r\n|\r|\n)/g, "<br/>");
-          if (content.lastIndexOf("식단표") > 0) {
-            this.setState({ selectedCategoryItem: item });
-            return true;
-          }
-        });
+        this.setState({ band_item: this.getBandData("식단표") });
       });
       // 데이터 가져오기 종료
       this.setState({ lodding: false });
     };
+
     fetchData();
   }
 
+  handleItemClick(e) {
+    const activeItem = e.target.textContent;
+    this.setState({ activeItem: activeItem });
+    this.setState({ band_item: this.getBandData(activeItem) });
+  }
+
+  handlePagination(e) {
+    const page = e.target.getAttribute("value");
+    this.setState({ page: page });
+  }
+
   render() {
-    const band_item = this.state.selectedCategoryItem;
+    const page = this.state.page;
+    const band_item = this.state.band_item;
+    const activeItem = this.state.activeItem;
     return (
       <div>
-        {/* band_item이 null인 경우는 오류발생함 */}
-        {band_item !== null ? <BandItem item={band_item} /> : "HELLO"}
+        <Menu pointing>
+          <Menu.Item
+            name="식단표"
+            active={activeItem === "식단표"}
+            onClick={this.handleItemClick}
+          />
+          <Menu.Item
+            name="시간표"
+            active={activeItem === "시간표"}
+            onClick={this.handleItemClick}
+          />
+          <Menu.Item
+            name="출석표"
+            active={activeItem === "출석표"}
+            onClick={this.handleItemClick}
+          />
+          <Menu.Menu position="right">
+            <Menu.Item>
+              <Input icon="search" placeholder="Search..." />
+            </Menu.Item>
+          </Menu.Menu>
+        </Menu>
+
+        <Container textAlign="center">
+          <Header as="h1">{activeItem}</Header>
+          {/* band_item이 null인 경우는 오류발생함 */}
+          {band_item !== null ? <BandItem item={band_item[page - 1]} /> : ""}
+
+          {band_item !== null ? (
+            <Pagination
+              boundaryRange={0}
+              defaultActivePage={1}
+              ellipsisItem={null}
+              firstItem={null}
+              lastItem={null}
+              siblingRange={1}
+              totalPages={band_item.length}
+              onClick={this.handlePagination}
+            />
+          ) : (
+            ""
+          )}
+        </Container>
       </div>
     );
   }
