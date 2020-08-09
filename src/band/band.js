@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import BandItem from "./bandItem";
-import { Container, Menu, Input, Pagination, Header } from "semantic-ui-react";
+import { Container, Menu, Image, Pagination, Header } from "semantic-ui-react";
+import "./band.css";
 
 class band extends Component {
   constructor(props) {
@@ -75,6 +76,9 @@ class band extends Component {
     return (
       <div>
         <Menu pointing>
+          <Menu.Item>
+            <Image src="./mutitext.png" width="150px" height="50px" alt="" />
+          </Menu.Item>
           <Menu.Item
             name="식단표"
             active={activeItem === "식단표"}
@@ -90,14 +94,9 @@ class band extends Component {
             active={activeItem === "출석표"}
             onClick={this.handleItemClick}
           />
-          <Menu.Menu position="right">
-            <Menu.Item>
-              <Input icon="search" placeholder="Search..." />
-            </Menu.Item>
-          </Menu.Menu>
         </Menu>
 
-        <Container textAlign="center">
+        <Container textAlign="center" className="box">
           <Header as="h1">{activeItem}</Header>
           {/* band_item이 null인 경우는 오류발생함 */}
           {band_item !== null ? <BandItem item={band_item[page - 1]} /> : ""}

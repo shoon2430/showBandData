@@ -10,7 +10,7 @@ class bandItem extends Component {
   }
   render() {
     const photo_url = this.props.item.photos[0].url;
-    return <Image src={photo_url} alt="" />;
+    return <Image className="imageBox" src={photo_url} alt="" height="600px" />;
   }
 }
 
