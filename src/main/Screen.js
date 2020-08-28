@@ -1,14 +1,15 @@
 import React, { Component } from "react";
-import { Grid } from "semantic-ui-react";
+import { Grid, Button } from "semantic-ui-react";
 import ScreenItem from "./ScreenItem";
 
 class Screen extends Component {
   getBandData = (allData, keyword) => {
     let band_item = [];
-    keyword = "식단표";
 
     band_item = allData.map((item, idx) => {
-      const content = item.content.replace(/(?:\r\n|\r|\n)/g, "<br/>");
+      const content = item.content
+        .slice(0, 20)
+        .replace(/(?:\r\n|\r|\n)/g, "<br/>");
       if (content.lastIndexOf(keyword) > 0) {
         return <ScreenItem key={idx} item={item} />;
       }
@@ -22,14 +23,23 @@ class Screen extends Component {
 
     return (
       <Grid
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          margin: "5px",
-        }}
+        textAlign="center"
+        style={{ height: "100vh" }}
+        verticalAlign="middle"
       >
         {this.getBandData(allData, keyword)}
+        <Grid.Row>
+          <Button
+            color="orange"
+            fluid
+            size="large"
+            onClick={() => {
+              window.location.reload(true);
+            }}
+          >
+            뒤로가자
+          </Button>
+        </Grid.Row>
       </Grid>
     );
   }

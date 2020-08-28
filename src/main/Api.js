@@ -5,7 +5,7 @@ export default async () => {
 
   //    네이버 밴드키 가져오기
   const access_token = process.env.REACT_APP_NAVER_BAND_KEY;
-  const url = `/v2.1/bands?access_token=${access_token}`;
+  const url = `https://openapi.band.us/v2.1/bands?access_token=${access_token}`;
   const band_key = await axios
     .get(url)
     .then((res) => {
@@ -17,7 +17,7 @@ export default async () => {
   if (!band_key) return allBandPosts;
 
   //   네이버 밴드글 데이터 가져오기
-  const get_band_url = `/v2/band/posts?access_token=${access_token}&band_key=${band_key}&locale=en_kr`;
+  const get_band_url = `https://openapi.band.us/v2/band/posts?access_token=${access_token}&band_key=${band_key}&locale=en_kr`;
 
   let get_next_band_url = "";
   let nextPage = null;

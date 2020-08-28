@@ -6,18 +6,12 @@ class ScreenItem extends Component {
     super(props);
     this.state = {
       imagePage: 1,
-      imageUrls: [],
     };
   }
 
   handlePagination = (e) => {
     const page = e.target.getAttribute("value");
     this.setState({ imagePage: page });
-  };
-
-  createImages = (photos) => {
-    const imageUrls = photos.map((photo) => photo.url);
-    this.setState({ imageUrls: imageUrls });
   };
 
   render() {
@@ -29,20 +23,29 @@ class ScreenItem extends Component {
           <Card.Header>{item.content}</Card.Header>
           {/* 이미지가 없는 글도 있을 수 있음 */}
           {item.photos.length !== 0 ? (
-            <Image src={item.photos[0].url} wrapped ui={false} />
+            <Image
+              src={item.photos[this.state.imagePage - 1].url}
+              wrapped
+              ui={false}
+            />
           ) : (
             ""
           )}
           {/* 이미지가 많은 글도 있을 수 있음 */}
           {item.photos.length > 1 ? (
-            <Card.Description>
+            <Card.Description
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <Pagination
                 boundaryRange={0}
-                defaultActivePage={1}
                 ellipsisItem={null}
                 firstItem={null}
                 lastItem={null}
-                siblingRange={1}
+                siblingRange={2}
                 activePage={this.state.imagePage}
                 totalPages={item.photos.length}
                 onClick={this.handlePagination}

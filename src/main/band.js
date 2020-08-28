@@ -22,7 +22,36 @@ class band extends Component {
   };
 
   componentDidMount() {
-    NaverBandApi().then((data) => this.setState({ allBandPosts: data }));
+    let microBandData = localStorage.microBandData
+      ? JSON.parse(localStorage.microBandData)
+      : null;
+    let microBandCreated = localStorage.microBandData
+      ? new Date(localStorage.microBandCreated)
+      : null;
+
+    if (microBandData) {
+      const now = new Date();
+      var fiveMinute = (now.getTime() - microBandCreated.getTime()) / 60000;
+
+      // 5분마다 API데이터 갱신
+      if (fiveMinute > 5) {
+        NaverBandApi().then((data) => {
+          localStorage.microBandData = JSON.stringify(
+            localStorage.microBandData
+          );
+          localStorage.microBandCreated = now;
+          this.setState({ allBandPosts: data });
+        });
+      }
+
+      this.setState({ allBandPosts: microBandData });
+    } else {
+      NaverBandApi().then((data) => {
+        localStorage.microBandData = JSON.stringify(data);
+        localStorage.microBandCreated = new Date();
+        this.setState({ allBandPosts: data });
+      });
+    }
   }
 
   render() {
