@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "./static/css/main.7bd27bf1.chunk.css",
-    "main.js": "./static/js/main.ddca53c9.chunk.js",
-    "main.js.map": "./static/js/main.ddca53c9.chunk.js.map",
-    "runtime-main.js": "./static/js/runtime-main.6be5c026.js",
-    "runtime-main.js.map": "./static/js/runtime-main.6be5c026.js.map",
-    "static/css/2.eec0e34d.chunk.css": "./static/css/2.eec0e34d.chunk.css",
-    "static/js/2.074561a8.chunk.js": "./static/js/2.074561a8.chunk.js",
-    "static/js/2.074561a8.chunk.js.map": "./static/js/2.074561a8.chunk.js.map",
-    "index.html": "./index.html",
-    "precache-manifest.1fa226fce13ba20804b709056a8ed098.js": "./precache-manifest.1fa226fce13ba20804b709056a8ed098.js",
-    "service-worker.js": "./service-worker.js",
-    "static/css/2.eec0e34d.chunk.css.map": "./static/css/2.eec0e34d.chunk.css.map",
-    "static/css/main.7bd27bf1.chunk.css.map": "./static/css/main.7bd27bf1.chunk.css.map",
-    "static/js/2.074561a8.chunk.js.LICENSE.txt": "./static/js/2.074561a8.chunk.js.LICENSE.txt",
-    "static/media/semantic.min.css": "./static/media/outline-icons.ef60a4f6.woff"
+    "main.css": "/showBandData/static/css/main.7bd27bf1.chunk.css",
+    "main.js": "/showBandData/static/js/main.72be554d.chunk.js",
+    "main.js.map": "/showBandData/static/js/main.72be554d.chunk.js.map",
+    "runtime-main.js": "/showBandData/static/js/runtime-main.42435e64.js",
+    "runtime-main.js.map": "/showBandData/static/js/runtime-main.42435e64.js.map",
+    "static/css/2.20278e58.chunk.css": "/showBandData/static/css/2.20278e58.chunk.css",
+    "static/js/2.074561a8.chunk.js": "/showBandData/static/js/2.074561a8.chunk.js",
+    "static/js/2.074561a8.chunk.js.map": "/showBandData/static/js/2.074561a8.chunk.js.map",
+    "index.html": "/showBandData/index.html",
+    "precache-manifest.65350a3c47e3e2d0bc773a0dd488b656.js": "/showBandData/precache-manifest.65350a3c47e3e2d0bc773a0dd488b656.js",
+    "service-worker.js": "/showBandData/service-worker.js",
+    "static/css/2.20278e58.chunk.css.map": "/showBandData/static/css/2.20278e58.chunk.css.map",
+    "static/css/main.7bd27bf1.chunk.css.map": "/showBandData/static/css/main.7bd27bf1.chunk.css.map",
+    "static/js/2.074561a8.chunk.js.LICENSE.txt": "/showBandData/static/js/2.074561a8.chunk.js.LICENSE.txt",
+    "static/media/semantic.min.css": "/showBandData/static/media/outline-icons.ef60a4f6.woff"
   },
   "entrypoints": [
-    "static/js/runtime-main.6be5c026.js",
-    "static/css/2.eec0e34d.chunk.css",
+    "static/js/runtime-main.42435e64.js",
+    "static/css/2.20278e58.chunk.css",
     "static/js/2.074561a8.chunk.js",
     "static/css/main.7bd27bf1.chunk.css",
-    "static/js/main.ddca53c9.chunk.js"
+    "static/js/main.72be554d.chunk.js"
   ]
 }
